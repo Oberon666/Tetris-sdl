@@ -64,7 +64,7 @@ int CApp::OnExecute() {
 
 				if (logic.getTick() > delayLogic) {
 					logic.start();
-					rezultLogic = Grid::instance().logic();
+					rezultLogic = Board::instance().logic();
 					parsingLogic(rezultLogic);
 					rezultLogic = 0;
 				}
@@ -93,7 +93,7 @@ void CApp::parsingLogic(int key) {
 			break;
 		case 2:
 			Mix_PlayChannel( -1, mixRow, 0 );
-			std::cout<<Grid::instance().getPoints() <<std::endl;
+			std::cout<<Board::instance().getPoints() <<std::endl;
 			break;
 		case 3:
 			pauseGame = true;

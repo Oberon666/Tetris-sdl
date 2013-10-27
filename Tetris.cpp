@@ -15,193 +15,193 @@ void cleaner_sp(Figure* object){
 }
 
 //Grid===========================================
-Grid::Grid()://activeFigure(new Figure), nextFigure(new Figure(static_cast<figure_Type>(0))),
+Board::Board()://activeFigure(new Figure), nextFigure(new Figure(static_cast<figure_Type>(0))),
 	activeFigure( objectPool.creatObject()),
 	nextFigure(objectPool.creatObject()), turneFigure(0),
 	activeFigureX(3), activeFigureY(0), nextFigureId(1), points(0),
-	renderGrid(true), renderMenu(true), renderNextFigure(true){
+	renderBoard(true), renderMenu(true), renderNextFigure(true){
 
 //	activeFigure.reset(objectPool.creatObject());
 //	nextFigure.reset(objectPool.creatObject());
 
 	activeFigureY = activeFigure->getBorder().uY - 2;// поправка если есть пустоты
-	figureInGrid(activeFigure);
+	figureInBoard(activeFigure);
 }
 //--------------------------------------------
-Grid::~Grid(){
+Board::~Board(){
 }
 //--------------------------------------------
 // grid filling grid_None
-void Grid::resetGrid(){
-	for (int j = 0; j < Settings::gridActiveHeight; ++j)
-		for (int i = 0; i < Settings::gridActiveWidth; ++i)
-			gridArray[j][i] = board_None;
-	renderGrid = true;
+void Board::resetBoard(){
+	for (int j = 0; j < Settings::boardActiveHeight; ++j)
+		for (int i = 0; i < Settings::boardActiveWidth; ++i)
+			boardArray[j][i] = board_None;
+	renderBoard = true;
 }
 //--------------------------------------------
 // singleton for Grid
-Grid& Grid::instance(){
-	static Grid inst_Grid;
+Board& Board::instance(){
+	static Board inst_Grid;
 	return (inst_Grid);
 }
 //--------------------------------------------
-board_Type Grid::getGridArray(unsigned int j,  unsigned int i) const{
-	assert(j >= 0 && j < Settings::gridActiveHeight);
-	assert(i >= 0 && i < Settings::gridActiveWidth);
-	return (gridArray[j][i]);
+board_Type Board::getBoardArray(unsigned int j,  unsigned int i) const{
+	assert(j >= 0 && j < Settings::boardActiveHeight);
+	assert(i >= 0 && i < Settings::boardActiveWidth);
+	return (boardArray[j][i]);
 }
 //--------------------------------------------
 // turn active figure
-void Grid::turnFigure(){
+void Board::turnFigure(){
 	turneFigure = objectPool.creatObject();
 	if ( !activeFigure->cloneTurned(turneFigure) ){
 		objectPool.deleteObject(turneFigure);
 		return;
 	}
 	if ( verification(turneFigure, activeFigureY , activeFigureX) ){
-		figureOutGrid(activeFigure);
+		figureOutBoard(activeFigure);
 		objectPool.deleteObject(activeFigure);
 		activeFigure = turneFigure;
-		figureInGrid(activeFigure);
-		renderGrid = true;
+		figureInBoard(activeFigure);
+		renderBoard = true;
 	}
 	else
 		if ( verification(turneFigure, activeFigureY , activeFigureX +1) ){
-			figureOutGrid(activeFigure);
+			figureOutBoard(activeFigure);
 			++activeFigureX;
 			objectPool.deleteObject(activeFigure);
 			activeFigure = turneFigure;
-			figureInGrid(activeFigure);
-			renderGrid = true;
+			figureInBoard(activeFigure);
+			renderBoard = true;
 		}
 		else
 			if ( verification(turneFigure, activeFigureY , activeFigureX -1) ){
-				figureOutGrid(activeFigure);
+				figureOutBoard(activeFigure);
 				--activeFigureX;
 				objectPool.deleteObject(activeFigure);
 				activeFigure = turneFigure;
-				figureInGrid(activeFigure);
-				renderGrid = true;
+				figureInBoard(activeFigure);
+				renderBoard = true;
 			}
 			else
 				if ( verification(turneFigure, activeFigureY +1 , activeFigureX) ){
-					figureOutGrid(activeFigure);
+					figureOutBoard(activeFigure);
 					++activeFigureY;
 					objectPool.deleteObject(activeFigure);
 					activeFigure = turneFigure;
-					figureInGrid(activeFigure);
-					renderGrid = true;
+					figureInBoard(activeFigure);
+					renderBoard = true;
 				}
 				else
 					if ( verification(turneFigure, activeFigureY , activeFigureX +2) ){
-						figureOutGrid(activeFigure);
+						figureOutBoard(activeFigure);
 						activeFigureX+=2;
 						objectPool.deleteObject(activeFigure);
 						activeFigure = turneFigure;
-						figureInGrid(activeFigure);
-						renderGrid = true;
+						figureInBoard(activeFigure);
+						renderBoard = true;
 					}
 					else
 						if ( verification(turneFigure, activeFigureY , activeFigureX -2) ){
-							figureOutGrid(activeFigure);
+							figureOutBoard(activeFigure);
 							activeFigureX-=2;
 							objectPool.deleteObject(activeFigure);
 							activeFigure = turneFigure;
-							figureInGrid(activeFigure);
-							renderGrid = true;
+							figureInBoard(activeFigure);
+							renderBoard = true;
 						}
 						else
 							if ( verification(turneFigure, activeFigureY +2 , activeFigureX) ){
-								figureOutGrid(activeFigure);
+								figureOutBoard(activeFigure);
 								activeFigureY+=2;
 								objectPool.deleteObject(activeFigure);
 								activeFigure = turneFigure;
-								figureInGrid(activeFigure);
-								renderGrid = true;
+								figureInBoard(activeFigure);
+								renderBoard = true;
 							}
 }
 //--------------------------------------------
 // acceleration down for active figure
-void Grid::downFigure(){
+void Board::downFigure(){
 	if (verification(activeFigure, activeFigureY +1, activeFigureX)){
-		figureOutGrid(activeFigure);
+		figureOutBoard(activeFigure);
 		++activeFigureY;
-		figureInGrid(activeFigure);
-		renderGrid = true;
+		figureInBoard(activeFigure);
+		renderBoard = true;
 	}
 }
 //--------------------------------------------
 // moving active figure to left
-void Grid::leftFigure(){
+void Board::leftFigure(){
 	if (verification(activeFigure, activeFigureY, activeFigureX - 1)){
-		figureOutGrid(activeFigure);
+		figureOutBoard(activeFigure);
 		--activeFigureX;
-		figureInGrid(activeFigure);
-		renderGrid = true;
+		figureInBoard(activeFigure);
+		renderBoard = true;
 	}
 }
 //--------------------------------------------
 // moving active figure to right
-void Grid::rightFigure(){
+void Board::rightFigure(){
 	if (verification(activeFigure, activeFigureY, activeFigureX + 1)){
-		figureOutGrid(activeFigure);
+		figureOutBoard(activeFigure);
 		++activeFigureX;
-		figureInGrid(activeFigure);
-		renderGrid = true;
+		figureInBoard(activeFigure);
+		renderBoard = true;
 	}
 }
 //--------------------------------------------
 // mapping figure to gridArray as grid_Down
-void Grid::figureInGrid(const Figure* figure){
+void Board::figureInBoard(const Figure* figure){
 	assert(figure != 0);
 	for (int j = 0; j < Figure::sizeFigure; ++j)
 		for (int i = 0; i < Figure::sizeFigure; ++i)
 			if (figure->getArrayFigure(j, i))
-				gridArray[j + activeFigureY][i + activeFigureX] = board_Down;
-	renderGrid = true;
+				boardArray[j + activeFigureY][i + activeFigureX] = board_Down;
+	renderBoard = true;
 }
 //--------------------------------------------
 // mapping figure to gridArray as grid_None
-void Grid::figureOutGrid(const Figure *figure){
+void Board::figureOutBoard(const Figure *figure){
 	assert(figure != 0);
 	for (int j = 0; j < Figure::sizeFigure; ++j)
 		for (int i = 0; i < Figure::sizeFigure; ++i)
 			if (figure->getArrayFigure(j, i))
-				gridArray[j + activeFigureY][i + activeFigureX] = board_None;
-	renderGrid = true;
+				boardArray[j + activeFigureY][i + activeFigureX] = board_None;
+	renderBoard = true;
 }
 //--------------------------------------------
 // mapping figure to gridArray as grid_Fixed
-void Grid::figureFixed(const Figure *figure){
+void Board::figureFixed(const Figure *figure){
 	for (int j = 0; j < Figure::sizeFigure; ++j)
 		for (int i = 0; i < Figure::sizeFigure; ++i)
 			if (figure->getArrayFigure(j, i))
-				gridArray[j + activeFigureY][i + activeFigureX] = board_Fixed;
-	renderGrid = true;
+				boardArray[j + activeFigureY][i + activeFigureX] = board_Fixed;
+	renderBoard = true;
 }
 //--------------------------------------------
 // check the display in an array of shapes
-bool Grid::verification(const Figure *figure,
+bool Board::verification(const Figure *figure,
 						short int newJ, short int newI) const{
 	assert(figure != 0);
 	//если попали за границы поля
-	if (newI+2-figure->getBorder().lX < 0 || newI+2+figure->getBorder().rX > Settings::gridActiveWidth-1)
+	if (newI+2-figure->getBorder().lX < 0 || newI+2+figure->getBorder().rX > Settings::boardActiveWidth-1)
 		return (false);
-	if (newJ+2-figure->getBorder().uY  < 0 || newJ+2+figure->getBorder().dY > Settings::gridActiveHeight-1)
+	if (newJ+2-figure->getBorder().uY  < 0 || newJ+2+figure->getBorder().dY > Settings::boardActiveHeight-1)
 		return (false);
 
 	//если натолкнулись на припятствие
 	for (int j = 0; j < Figure::sizeFigure; ++j)
 		for (int i = 0; i < Figure::sizeFigure; ++i)
 			if (figure->getArrayFigure(j, i))
-				if (gridArray[j + newJ][i + newI] != board_None &&
-						gridArray[j + newJ][i + newI] != board_Down)
+				if (boardArray[j + newJ][i + newI] != board_None &&
+						boardArray[j + newJ][i + newI] != board_Down)
 					return (false);
 	return (true);
 }
 //--------------------------------------------
 // return true if firure can not dawn (check "activeFigureY +1")
-bool Grid::notDownsFigure(const Figure *figure) const{
+bool Board::notDownsFigure(const Figure *figure) const{
 	assert(figure != 0);
 	if (!verification(figure, activeFigureY +1, activeFigureX))
 		return (true);
@@ -210,7 +210,7 @@ bool Grid::notDownsFigure(const Figure *figure) const{
 //--------------------------------------------
 // in process... переделать костыли
 // 1 - звук падения, 2 - звук сброса, 3 - конец игры
-unsigned char Grid::logic(){
+unsigned char Board::logic(){
 	if (notDownsFigure(activeFigure))// если не можем двигать, двигаем
 	{
 		unsigned char rezult(1);
@@ -226,10 +226,10 @@ unsigned char Grid::logic(){
 		++nextFigureId; // счетчик новой фигуры
 		if (notDownsFigure(activeFigure)){//если она не лезит в стакан, то конец
 			gameOver();
-			figureInGrid(activeFigure);
+			figureInBoard(activeFigure);
 			return (3);
 		}
-		figureInGrid(activeFigure);//выкатили новую фигуру на поле
+		figureInBoard(activeFigure);//выкатили новую фигуру на поле
 		return(rezult);
 	}
 	else{
@@ -239,36 +239,36 @@ unsigned char Grid::logic(){
 }
 //--------------------------------------------
 // end game
-void Grid::gameOver(){
+void Board::gameOver(){
 	// проверить что подчистил все сотояния
 	points = 0;
-	resetGrid();
+	resetBoard();
 }
 //--------------------------------------------
-bool Grid::getNextFigure(int j, int i) const{
+bool Board::getNextFigure(int j, int i) const{
 	assert(j >= 0 && j < Figure::sizeFigure);
 	assert(i >= 0 && i < Figure::sizeFigure);
 	return (nextFigure->getArrayFigure(j, i));
 }
 //--------------------------------------------
 // index "next figure"
-unsigned long int Grid::getNextFigureId() const{
+unsigned long int Board::getNextFigureId() const{
 	return (nextFigureId);
 }
 //--------------------------------------------
 // Search full rows, reset it and shift
-bool Grid::lowerRow(){
+bool Board::lowerRow(){
 	bool check, rezult(false);
-	for (int j = 0; j < Settings::gridActiveHeight; ++j){
+	for (int j = 0; j < Settings::boardActiveHeight; ++j){
 		check = true;
-		for (int i = 0; i < Settings::gridActiveWidth; ++i){
-			if (gridArray[j][i] != board_Fixed)
+		for (int i = 0; i < Settings::boardActiveWidth; ++i){
+			if (boardArray[j][i] != board_Fixed)
 				check = false;
 		}
 		if (check){
 			rezult = true;
-			for (int i = Settings::gridActiveWidth-1; i >= 0; --i)
-				gridArray[j][i] = board_None;
+			for (int i = Settings::boardActiveWidth-1; i >= 0; --i)
+				boardArray[j][i] = board_None;
 			RowsDown(j);
 			++points;
 		}
@@ -277,14 +277,14 @@ bool Grid::lowerRow(){
 }
 //--------------------------------------------
 //down rows [y-1..0] to [y..1]
-void Grid::RowsDown(int y){
+void Board::RowsDown(int y){
 	for (int j = y-1; j >= 0; --j){
-		for (int i = Settings::gridActiveWidth-1; i >= 0; --i)
-			gridArray[j+1][i] = gridArray[j][i];
+		for (int i = Settings::boardActiveWidth-1; i >= 0; --i)
+			boardArray[j+1][i] = boardArray[j][i];
 	}
 }
 //--------------------------------------------
-unsigned int Grid::getPoints() const{
+unsigned int Board::getPoints() const{
 	return (points);
 }
 //--------------------------------------------

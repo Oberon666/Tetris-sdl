@@ -22,7 +22,7 @@ void CApp::OnKeyDown(SDLKey sym, SDLMod mod, Uint16 unicode){
 		}
 		case SDLK_UP:{
 			if (!pauseGame){
-				Grid::instance().turnFigure();
+				Board::instance().turnFigure();
 			}
 			break;
 		}

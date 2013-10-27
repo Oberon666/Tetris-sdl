@@ -17,9 +17,9 @@ bool CApp::OnInit(){
 	}
 
 	if ((SurfDisplay = SDL_SetVideoMode(
-			 Settings::gridActiveWidth * Settings::sizePrimitive +
-			 Settings::gridMenuWidth * Settings::sizePrimitive,
-			 Settings::gridActiveHeight * Settings::sizePrimitive, 24,
+			 Settings::boardActiveWidth * Settings::sizePrimitive +
+			 Settings::boardMenuWidth * Settings::sizePrimitive,
+			 Settings::boardActiveHeight * Settings::sizePrimitive, 24,
 			 SDL_HWSURFACE | SDL_DOUBLEBUF)) == 0){//SDL_RESIZABLE
 		Vet::myError( "error to SDL_SetVideoMode", SDL_GetError());
 		return (false);
@@ -60,7 +60,7 @@ bool CApp::OnInit(){
 
 	SDL_WM_SetCaption( "Tetris", NULL );
 
-	Grid::instance();
+	Board::instance();
 
 	//Grid::instance().soundRowsReset = soundRow;
 

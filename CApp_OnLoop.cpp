@@ -7,22 +7,22 @@ void CApp::OnLoop(){
 		case MovingFigure::left:{
 			if (!movingFigure.LongPressTimer.isStarted()){
 				movingFigure.LongPressTimer.start();
-				Grid::instance().leftFigure();
+				Board::instance().leftFigure();
 			}
 			else
 				if (movingFigure.LongPressTimer.getTick() > 200){
-					Grid::instance().leftFigure();
+					Board::instance().leftFigure();
 				}
 			break;
 		}
 		case MovingFigure::right:{
 			if (!movingFigure.LongPressTimer.isStarted()){
 				movingFigure.LongPressTimer.start();
-				Grid::instance().rightFigure();
+				Board::instance().rightFigure();
 			}
 			else
 				if (movingFigure.LongPressTimer.getTick() > 200){
-					Grid::instance().rightFigure();
+					Board::instance().rightFigure();
 				}
 			break;
 		}

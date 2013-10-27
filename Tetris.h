@@ -9,14 +9,14 @@
 #include "ObjectPool.h"
 
 //--------------------------------------------
-enum grid_Type{grid_None,
-			   grid_Down,
-			   grid_Fixed};
+enum board_Type{board_None,
+			   board_Down,
+			   board_Fixed};
 //--------------------------------------------
 struct Settings{
-	static const unsigned char gridActiveWidth = 10;
-	static const unsigned char gridActiveHeight = 20;
-	static const unsigned char gridMenuWidth = 7;
+	static const unsigned char boardActiveWidth = 10;
+	static const unsigned char boardActiveHeight = 20;
+	static const unsigned char boardMenuWidth = 7;
 	static const unsigned short int sizePrimitive = 40;
 	static const std::string pathNone;
 	static const std::string pathDown;
@@ -29,12 +29,12 @@ private:
 //--------------------------------------------
 void cleaner_sp(Figure* object);
 
-class Grid{
+class Board{
 public:
-	static Grid& instance();
-	Grid();
+	static Board& instance();
+	Board();
 
-	grid_Type getGridArray(unsigned int j, unsigned int i) const;
+	board_Type getBoardArray(unsigned int j, unsigned int i) const;
 
 	unsigned char logic();
 	void turnFigure();
@@ -46,16 +46,16 @@ public:
 	unsigned int getPoints() const;
 
 	//to optimize the rendering
-	bool renderGrid;
+	bool renderBoard;
 	bool renderMenu;
 	bool renderNextFigure;
 
-	virtual ~Grid();
+	virtual ~Board();
 
 private:
 	ObjectPool objectPool;
 
-	grid_Type gridArray[Settings::gridActiveHeight][Settings::gridActiveWidth];
+	board_Type boardArray[Settings::boardActiveHeight][Settings::boardActiveWidth];
 	unsigned int points;
 
 	Figure* activeFigure;
@@ -68,7 +68,7 @@ private:
 	Figure* turneFigure;
 
 	void downFigure();
-	void resetGrid();
+	void resetBoard();
 	void figureInGrid(const Figure *figure);
 	void figureOutGrid(const Figure* figure);
 	bool verification(const Figure* figure, short newJ, short newI) const;
@@ -81,8 +81,8 @@ private:
 	void empty(Figure *some);
 
 	//not used
-	Grid(const Grid&);
-	Grid& operator=(const Grid&);
+	Board(const Board&);
+	Board& operator=(const Board&);
 };
 //--------------------------------------------
 #endif // TETRIS_H
