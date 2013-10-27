@@ -62,8 +62,6 @@ bool CApp::OnInit(){
 
 	Board::instance();
 
-	//Grid::instance().soundRowsReset = soundRow;
-
 	return true;
 }
 //--------------------------------------------

@@ -2,6 +2,7 @@
 #define MYHEADER_H
 
 //#define NDEBUG
+#include <cassert>
 
 namespace Vet {
 

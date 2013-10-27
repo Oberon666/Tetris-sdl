@@ -3,7 +3,6 @@
 #define TETRIS_H
 
 #include <string>
-#include <tr1/memory>
 
 #include "TFigure.h"
 #include "ObjectPool.h"

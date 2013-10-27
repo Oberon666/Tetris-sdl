@@ -2,7 +2,7 @@
 #ifndef CAPP_TIMER_H
 #define CAPP_TIMER_H
 
-#include<SDL/SDL.h>
+#include <SDL/SDL.h>
 
 //--------------------------------------------
 class Timer{

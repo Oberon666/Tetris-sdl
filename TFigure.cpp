@@ -3,7 +3,6 @@
 #include "TFigure.h"
 #include <cstdlib>
 #include <ctime>
-#include <cassert>
 #include <iostream>
 
 //--------------------------------------------
@@ -33,14 +32,6 @@ bool Shape::cloneTurned(Shape* clone) const{
 	}
 	else{
 		return (false);
-//		for (int j = 0; j < sizeFigure; ++j)
-//			for (int i = 0; i < sizeFigure; ++i)
-//				clone->arrayFigure[j][i] = arrayFigure[j][i];
-
-//		clone->border.rX = border.rX;
-//		clone->border.dY = border.dY;
-//		clone->border.uY = border.uY;
-//		clone->border.lX = border.lX;
 	}
 	assert(clone->checFilling());
 	return (true);
@@ -50,9 +41,7 @@ shape_Type Shape::getType() const{
 	return (myType);
 }
 //--------------------------------------------
-Shape::~Shape(){
-	//std::cout<<" i dead" <<std::endl;
-}
+Shape::~Shape(){}
 //--------------------------------------------
 bool Shape::getArrayShape(unsigned char j, unsigned char i) const{
 	return (arrayShape[j][i]);
@@ -87,22 +76,6 @@ void Shape::clear(){
 	int type = rand()%7;
 	myType = static_cast<shape_Type>(type);
 	filling(shape_Type(type));
-
-//	bool arrayT[sizeFigure][sizeFigure] ={
-//		0,0,0,0,0,
-//		0,0,0,0,0,
-//		0,0,0,0,0,
-//		0,0,0,0,0,
-//		0,0,0,0,0};
-
-//	for (int j = 0; j < sizeFigure; ++j)
-//		for (int i = 0; i < sizeFigure; ++i)
-//			arrayFigure[j][i] = arrayT[j][i];
-
-//	border.dY = 0;
-//	border.lX = 0;
-//	border.rX = 0;
-//	border.uY = 0;
 }
 //--------------------------------------------
 bool Shape::checFilling(){
@@ -153,7 +126,7 @@ bool Shape::checFilling(){
 		}
 
 	if ( !(border.dY ==d && border.lX == l && border.rX == r && border.uY ==u) ){
-		std::cout<<"error tupe " <<myType <<": " <<int(d) <<" " <<int(l) <<" " <<int(r) <<" " <<int(u) <<std::endl;
+		std::cout<<"error type " <<myType <<": " <<int(d) <<" " <<int(l) <<" " <<int(r) <<" " <<int(u) <<std::endl;
 		return (false);
 	}
 	return (true);

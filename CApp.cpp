@@ -19,7 +19,6 @@ CApp::CApp(): Running(true), SurfDisplay(0), SurfNone(0), SurfDown(0),
 CApp::MovingFigure::MovingFigure(): direction(constant) {
 }
 //--------------------------------------------
-//--------------------------------------------
 CApp::~CApp() {
 	OnCleanup();
 }
@@ -30,9 +29,6 @@ int CApp::OnExecute() {
 		if(OnInit() == false) {
 			return -1;
 		}
-
-//		int i = 0;
-//		i= i/i;
 
 		SDL_Event Event;
 		Mix_PlayMusic( mixMusix, -1 );

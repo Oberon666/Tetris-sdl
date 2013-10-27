@@ -3,8 +3,6 @@
 #define TFIGURE_H
 
 #include <string>
-//#include <tr1/memory>
-#include <tr1/memory>
 
 //--------------------------------------------
 enum shape_Type{shape_T,
@@ -57,8 +55,6 @@ private:
 	void shapeMax();
 
 	Shape& operator=(const Shape&);
-	//Figure(const Figure& fig);
-
 };
 //--------------------------------------------
 #endif // TFIGURE_H

@@ -3,7 +3,6 @@
 #define OBJECTPOOL_H
 
 #include <vector>
-
 #include "TFigure.h"
 
 //----------------------------------------

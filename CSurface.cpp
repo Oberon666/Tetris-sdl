@@ -12,7 +12,6 @@ SDL_Surface* CSurface::OnLoad(const char* File){
 	SDL_Surface* Surf_Temp = 0;
 	SDL_Surface* Surf_Return = 0;
 
-	//    if ((Surf_Temp = SDL_LoadBMP(File)) == 0)
 	if ((Surf_Temp = IMG_Load(File)) == 0){
 		Vet::myError( "error to CSurface::OnLoad", SDL_GetError());
 		return (0);

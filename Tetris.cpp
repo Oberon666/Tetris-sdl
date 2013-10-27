@@ -1,7 +1,6 @@
 //Tetris.cpp
 #include "myHeader.h"
 #include "Tetris.h"
-#include <cassert>
 
 // Settings
 const std::string Settings::pathNone = "pictures_40/None.png";
@@ -9,20 +8,12 @@ const std::string Settings::pathDown = "pictures_40/Down.png";
 const std::string Settings::pathFixed = "pictures_40/Fixed.png";
 const std::string Settings::pathWhite = "pictures_40/White.png";
 
-
-void cleaner_sp(Shape* object){
-	Vet::myError("опа!\n");
-}
-
 //Grid===========================================
-Board::Board()://activeFigure(new Figure), nextFigure(new Figure(static_cast<figure_Type>(0))),
+Board::Board():
 	activeShape( objectPool.creatObject()),
 	nextShape(objectPool.creatObject()), turneShape(0),
 	activeShapeX(3), activeShapeY(0), nextShapeId(1), points(0),
 	renderBoard(true), renderMenu(true), renderNextShape(true){
-
-//	activeFigure.reset(objectPool.creatObject());
-//	nextFigure.reset(objectPool.creatObject());
 
 	activeShapeY = activeShape->getBorder().uY - 2;// поправка если есть пустоты
 	shapeInBoard(activeShape);
