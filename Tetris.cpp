@@ -17,6 +17,10 @@ Board::Board():
 
 	activeShapeY = activeShape->getBorder().uY - 2;// поправка если есть пустоты
 	shapeInBoard(activeShape);
+	while(nextShape->getType() == activeShape->getType()){
+		objectPool.deleteObject(nextShape);
+		nextShape = objectPool.creatObject();
+	}
 }
 //--------------------------------------------
 Board::~Board(){
