@@ -35,7 +35,7 @@ Grid::~Grid(){
 void Grid::resetGrid(){
 	for (int j = 0; j < Settings::gridActiveHeight; ++j)
 		for (int i = 0; i < Settings::gridActiveWidth; ++i)
-			gridArray[j][i] = grid_None;
+			gridArray[j][i] = board_None;
 	renderGrid = true;
 }
 //--------------------------------------------
@@ -45,7 +45,7 @@ Grid& Grid::instance(){
 	return (inst_Grid);
 }
 //--------------------------------------------
-grid_Type Grid::getGridArray(unsigned int j,  unsigned int i) const{
+board_Type Grid::getGridArray(unsigned int j,  unsigned int i) const{
 	assert(j >= 0 && j < Settings::gridActiveHeight);
 	assert(i >= 0 && i < Settings::gridActiveWidth);
 	return (gridArray[j][i]);
@@ -157,7 +157,7 @@ void Grid::figureInGrid(const Figure* figure){
 	for (int j = 0; j < Figure::sizeFigure; ++j)
 		for (int i = 0; i < Figure::sizeFigure; ++i)
 			if (figure->getArrayFigure(j, i))
-				gridArray[j + activeFigureY][i + activeFigureX] = grid_Down;
+				gridArray[j + activeFigureY][i + activeFigureX] = board_Down;
 	renderGrid = true;
 }
 //--------------------------------------------
@@ -167,7 +167,7 @@ void Grid::figureOutGrid(const Figure *figure){
 	for (int j = 0; j < Figure::sizeFigure; ++j)
 		for (int i = 0; i < Figure::sizeFigure; ++i)
 			if (figure->getArrayFigure(j, i))
-				gridArray[j + activeFigureY][i + activeFigureX] = grid_None;
+				gridArray[j + activeFigureY][i + activeFigureX] = board_None;
 	renderGrid = true;
 }
 //--------------------------------------------
@@ -176,7 +176,7 @@ void Grid::figureFixed(const Figure *figure){
 	for (int j = 0; j < Figure::sizeFigure; ++j)
 		for (int i = 0; i < Figure::sizeFigure; ++i)
 			if (figure->getArrayFigure(j, i))
-				gridArray[j + activeFigureY][i + activeFigureX] = grid_Fixed;
+				gridArray[j + activeFigureY][i + activeFigureX] = board_Fixed;
 	renderGrid = true;
 }
 //--------------------------------------------
@@ -194,8 +194,8 @@ bool Grid::verification(const Figure *figure,
 	for (int j = 0; j < Figure::sizeFigure; ++j)
 		for (int i = 0; i < Figure::sizeFigure; ++i)
 			if (figure->getArrayFigure(j, i))
-				if (gridArray[j + newJ][i + newI] != grid_None &&
-						gridArray[j + newJ][i + newI] != grid_Down)
+				if (gridArray[j + newJ][i + newI] != board_None &&
+						gridArray[j + newJ][i + newI] != board_Down)
 					return (false);
 	return (true);
 }
@@ -262,13 +262,13 @@ bool Grid::lowerRow(){
 	for (int j = 0; j < Settings::gridActiveHeight; ++j){
 		check = true;
 		for (int i = 0; i < Settings::gridActiveWidth; ++i){
-			if (gridArray[j][i] != grid_Fixed)
+			if (gridArray[j][i] != board_Fixed)
 				check = false;
 		}
 		if (check){
 			rezult = true;
 			for (int i = Settings::gridActiveWidth-1; i >= 0; --i)
-				gridArray[j][i] = grid_None;
+				gridArray[j][i] = board_None;
 			RowsDown(j);
 			++points;
 		}

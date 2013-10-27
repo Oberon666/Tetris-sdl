@@ -25,13 +25,13 @@ void CApp::OnRender(){
 		Grid::instance().renderGrid = false;
 		for (int j = 0; j < Settings::gridActiveHeight; ++j){
 			for (int i = 0; i < Settings::gridActiveWidth; ++i){
-				if (Grid::instance().getGridArray(j, i) == grid_Down)
+				if (Grid::instance().getGridArray(j, i) == board_Down)
 					CSurface::OnDraw(SurfDisplay, SurfDown, i*Settings::sizePrimitive, j*Settings::sizePrimitive);
 
-				if (Grid::instance().getGridArray(j, i) == grid_Fixed)
+				if (Grid::instance().getGridArray(j, i) == board_Fixed)
 					CSurface::OnDraw(SurfDisplay, SurfFixed, i*Settings::sizePrimitive, j*Settings::sizePrimitive);
 
-				if (Grid::instance().getGridArray(j, i) == grid_None)
+				if (Grid::instance().getGridArray(j, i) == board_None)
 					CSurface::OnDraw(SurfDisplay, SurfNone, i*Settings::sizePrimitive, j*Settings::sizePrimitive);
 			}
 		}
