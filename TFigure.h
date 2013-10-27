@@ -7,16 +7,16 @@
 #include <tr1/memory>
 
 //--------------------------------------------
-enum figure_Type{figure_T,
-				 figure_Q,
-				 figure_I,
-				 figure_Z,
-				 figure_S,
-				 figure_J,
-				 figure_L,
-				 figure_Max};
+enum shape_Type{shape_T,
+				shape_Q,
+				shape_I,
+				shape_Z,
+				shape_S,
+				shape_J,
+				shape_L,
+				shape_Max};
 //--------------------------------------------
-class Figure{
+class Shape{
 private:
 	struct Border{
 		unsigned char lX;
@@ -26,37 +26,37 @@ private:
 	};
 
 public:
-	Figure();
-	~Figure();
-	Figure(figure_Type type);
+	Shape();
+	~Shape();
+	Shape(shape_Type type);
 
-	static const unsigned char sizeFigure = 5;
+	static const unsigned char sizeShape = 5;
 
-	bool getArrayFigure(unsigned char j, unsigned char i) const;
-	figure_Type getType() const;
-	bool cloneTurned(Figure *clone) const;
+	bool getArrayShape(unsigned char j, unsigned char i) const;
+	shape_Type getType() const;
+	bool cloneTurned(Shape *clone) const;
 	Border getBorder() const;
 	unsigned char getColor() const;
 	void clear();
 
 private:
-	bool arrayFigure[sizeFigure][sizeFigure];
-	figure_Type myType;
+	bool arrayShape[sizeShape][sizeShape];
+	shape_Type myType;
 	Border border;
 	unsigned char color;
 
-	void filling(figure_Type type);
+	void filling(shape_Type type);
 	bool checFilling();
-	void shapesT();
-	void shapesQ();
-	void shapesI();
-	void shapesZ();
-	void shapesS();
-	void shapesJ();
-	void shapesL();
-	void shapesMax();
+	void shapeT();
+	void shapeQ();
+	void shapeI();
+	void shapeZ();
+	void shapeS();
+	void shapeJ();
+	void shapeL();
+	void shapeMax();
 
-	Figure& operator=(const Figure&);
+	Shape& operator=(const Shape&);
 	//Figure(const Figure& fig);
 
 };

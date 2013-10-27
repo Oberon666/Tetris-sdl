@@ -10,22 +10,22 @@ const std::string Settings::pathFixed = "pictures_40/Fixed.png";
 const std::string Settings::pathWhite = "pictures_40/White.png";
 
 
-void cleaner_sp(Figure* object){
+void cleaner_sp(Shape* object){
 	Vet::myError("опа!\n");
 }
 
 //Grid===========================================
 Board::Board()://activeFigure(new Figure), nextFigure(new Figure(static_cast<figure_Type>(0))),
-	activeFigure( objectPool.creatObject()),
-	nextFigure(objectPool.creatObject()), turneFigure(0),
-	activeFigureX(3), activeFigureY(0), nextFigureId(1), points(0),
-	renderBoard(true), renderMenu(true), renderNextFigure(true){
+	activeShape( objectPool.creatObject()),
+	nextShape(objectPool.creatObject()), turneShape(0),
+	activeShapeX(3), activeShapeY(0), nextShapeId(1), points(0),
+	renderBoard(true), renderMenu(true), renderNextShape(true){
 
 //	activeFigure.reset(objectPool.creatObject());
 //	nextFigure.reset(objectPool.creatObject());
 
-	activeFigureY = activeFigure->getBorder().uY - 2;// поправка если есть пустоты
-	figureInBoard(activeFigure);
+	activeShapeY = activeShape->getBorder().uY - 2;// поправка если есть пустоты
+	shapeInBoard(activeShape);
 }
 //--------------------------------------------
 Board::~Board(){
@@ -52,136 +52,136 @@ board_Type Board::getBoardArray(unsigned int j,  unsigned int i) const{
 }
 //--------------------------------------------
 // turn active figure
-void Board::turnFigure(){
-	turneFigure = objectPool.creatObject();
-	if ( !activeFigure->cloneTurned(turneFigure) ){
-		objectPool.deleteObject(turneFigure);
+void Board::turnShape(){
+	turneShape = objectPool.creatObject();
+	if ( !activeShape->cloneTurned(turneShape) ){
+		objectPool.deleteObject(turneShape);
 		return;
 	}
-	if ( verification(turneFigure, activeFigureY , activeFigureX) ){
-		figureOutBoard(activeFigure);
-		objectPool.deleteObject(activeFigure);
-		activeFigure = turneFigure;
-		figureInBoard(activeFigure);
+	if ( verification(turneShape, activeShapeY , activeShapeX) ){
+		shapeOutBoard(activeShape);
+		objectPool.deleteObject(activeShape);
+		activeShape = turneShape;
+		shapeInBoard(activeShape);
 		renderBoard = true;
 	}
 	else
-		if ( verification(turneFigure, activeFigureY , activeFigureX +1) ){
-			figureOutBoard(activeFigure);
-			++activeFigureX;
-			objectPool.deleteObject(activeFigure);
-			activeFigure = turneFigure;
-			figureInBoard(activeFigure);
+		if ( verification(turneShape, activeShapeY , activeShapeX +1) ){
+			shapeOutBoard(activeShape);
+			++activeShapeX;
+			objectPool.deleteObject(activeShape);
+			activeShape = turneShape;
+			shapeInBoard(activeShape);
 			renderBoard = true;
 		}
 		else
-			if ( verification(turneFigure, activeFigureY , activeFigureX -1) ){
-				figureOutBoard(activeFigure);
-				--activeFigureX;
-				objectPool.deleteObject(activeFigure);
-				activeFigure = turneFigure;
-				figureInBoard(activeFigure);
+			if ( verification(turneShape, activeShapeY , activeShapeX -1) ){
+				shapeOutBoard(activeShape);
+				--activeShapeX;
+				objectPool.deleteObject(activeShape);
+				activeShape = turneShape;
+				shapeInBoard(activeShape);
 				renderBoard = true;
 			}
 			else
-				if ( verification(turneFigure, activeFigureY +1 , activeFigureX) ){
-					figureOutBoard(activeFigure);
-					++activeFigureY;
-					objectPool.deleteObject(activeFigure);
-					activeFigure = turneFigure;
-					figureInBoard(activeFigure);
+				if ( verification(turneShape, activeShapeY +1 , activeShapeX) ){
+					shapeOutBoard(activeShape);
+					++activeShapeY;
+					objectPool.deleteObject(activeShape);
+					activeShape = turneShape;
+					shapeInBoard(activeShape);
 					renderBoard = true;
 				}
 				else
-					if ( verification(turneFigure, activeFigureY , activeFigureX +2) ){
-						figureOutBoard(activeFigure);
-						activeFigureX+=2;
-						objectPool.deleteObject(activeFigure);
-						activeFigure = turneFigure;
-						figureInBoard(activeFigure);
+					if ( verification(turneShape, activeShapeY , activeShapeX +2) ){
+						shapeOutBoard(activeShape);
+						activeShapeX+=2;
+						objectPool.deleteObject(activeShape);
+						activeShape = turneShape;
+						shapeInBoard(activeShape);
 						renderBoard = true;
 					}
 					else
-						if ( verification(turneFigure, activeFigureY , activeFigureX -2) ){
-							figureOutBoard(activeFigure);
-							activeFigureX-=2;
-							objectPool.deleteObject(activeFigure);
-							activeFigure = turneFigure;
-							figureInBoard(activeFigure);
+						if ( verification(turneShape, activeShapeY , activeShapeX -2) ){
+							shapeOutBoard(activeShape);
+							activeShapeX-=2;
+							objectPool.deleteObject(activeShape);
+							activeShape = turneShape;
+							shapeInBoard(activeShape);
 							renderBoard = true;
 						}
 						else
-							if ( verification(turneFigure, activeFigureY +2 , activeFigureX) ){
-								figureOutBoard(activeFigure);
-								activeFigureY+=2;
-								objectPool.deleteObject(activeFigure);
-								activeFigure = turneFigure;
-								figureInBoard(activeFigure);
+							if ( verification(turneShape, activeShapeY +2 , activeShapeX) ){
+								shapeOutBoard(activeShape);
+								activeShapeY+=2;
+								objectPool.deleteObject(activeShape);
+								activeShape = turneShape;
+								shapeInBoard(activeShape);
 								renderBoard = true;
 							}
 }
 //--------------------------------------------
 // acceleration down for active figure
-void Board::downFigure(){
-	if (verification(activeFigure, activeFigureY +1, activeFigureX)){
-		figureOutBoard(activeFigure);
-		++activeFigureY;
-		figureInBoard(activeFigure);
+void Board::downShape(){
+	if (verification(activeShape, activeShapeY +1, activeShapeX)){
+		shapeOutBoard(activeShape);
+		++activeShapeY;
+		shapeInBoard(activeShape);
 		renderBoard = true;
 	}
 }
 //--------------------------------------------
 // moving active figure to left
-void Board::leftFigure(){
-	if (verification(activeFigure, activeFigureY, activeFigureX - 1)){
-		figureOutBoard(activeFigure);
-		--activeFigureX;
-		figureInBoard(activeFigure);
+void Board::leftShape(){
+	if (verification(activeShape, activeShapeY, activeShapeX - 1)){
+		shapeOutBoard(activeShape);
+		--activeShapeX;
+		shapeInBoard(activeShape);
 		renderBoard = true;
 	}
 }
 //--------------------------------------------
 // moving active figure to right
-void Board::rightFigure(){
-	if (verification(activeFigure, activeFigureY, activeFigureX + 1)){
-		figureOutBoard(activeFigure);
-		++activeFigureX;
-		figureInBoard(activeFigure);
+void Board::rightShape(){
+	if (verification(activeShape, activeShapeY, activeShapeX + 1)){
+		shapeOutBoard(activeShape);
+		++activeShapeX;
+		shapeInBoard(activeShape);
 		renderBoard = true;
 	}
 }
 //--------------------------------------------
 // mapping figure to gridArray as grid_Down
-void Board::figureInBoard(const Figure* figure){
+void Board::shapeInBoard(const Shape* figure){
 	assert(figure != 0);
-	for (int j = 0; j < Figure::sizeFigure; ++j)
-		for (int i = 0; i < Figure::sizeFigure; ++i)
-			if (figure->getArrayFigure(j, i))
-				boardArray[j + activeFigureY][i + activeFigureX] = board_Down;
+	for (int j = 0; j < Shape::sizeShape; ++j)
+		for (int i = 0; i < Shape::sizeShape; ++i)
+			if (figure->getArrayShape(j, i))
+				boardArray[j + activeShapeY][i + activeShapeX] = board_Down;
 	renderBoard = true;
 }
 //--------------------------------------------
 // mapping figure to gridArray as grid_None
-void Board::figureOutBoard(const Figure *figure){
+void Board::shapeOutBoard(const Shape *figure){
 	assert(figure != 0);
-	for (int j = 0; j < Figure::sizeFigure; ++j)
-		for (int i = 0; i < Figure::sizeFigure; ++i)
-			if (figure->getArrayFigure(j, i))
-				boardArray[j + activeFigureY][i + activeFigureX] = board_None;
+	for (int j = 0; j < Shape::sizeShape; ++j)
+		for (int i = 0; i < Shape::sizeShape; ++i)
+			if (figure->getArrayShape(j, i))
+				boardArray[j + activeShapeY][i + activeShapeX] = board_None;
 	renderBoard = true;
 }
 //--------------------------------------------
 // mapping figure to gridArray as grid_Fixed
-void Board::figureFixed(const Figure *figure){
-	for (int j = 0; j < Figure::sizeFigure; ++j)
-		for (int i = 0; i < Figure::sizeFigure; ++i)
-			if (figure->getArrayFigure(j, i))
-				boardArray[j + activeFigureY][i + activeFigureX] = board_Fixed;
+void Board::shapeFixed(const Shape *figure){
+	for (int j = 0; j < Shape::sizeShape; ++j)
+		for (int i = 0; i < Shape::sizeShape; ++i)
+			if (figure->getArrayShape(j, i))
+				boardArray[j + activeShapeY][i + activeShapeX] = board_Fixed;
 	renderBoard = true;
 }
 //--------------------------------------------
 // check the display in an array of shapes
-bool Board::verification(const Figure *figure,
+bool Board::verification(const Shape *figure,
 						short int newJ, short int newI) const{
 	assert(figure != 0);
 	//если попали за границы поля
@@ -191,9 +191,9 @@ bool Board::verification(const Figure *figure,
 		return (false);
 
 	//если натолкнулись на припятствие
-	for (int j = 0; j < Figure::sizeFigure; ++j)
-		for (int i = 0; i < Figure::sizeFigure; ++i)
-			if (figure->getArrayFigure(j, i))
+	for (int j = 0; j < Shape::sizeShape; ++j)
+		for (int i = 0; i < Shape::sizeShape; ++i)
+			if (figure->getArrayShape(j, i))
 				if (boardArray[j + newJ][i + newI] != board_None &&
 						boardArray[j + newJ][i + newI] != board_Down)
 					return (false);
@@ -201,9 +201,9 @@ bool Board::verification(const Figure *figure,
 }
 //--------------------------------------------
 // return true if firure can not dawn (check "activeFigureY +1")
-bool Board::notDownsFigure(const Figure *figure) const{
+bool Board::notDownsShape(const Shape *figure) const{
 	assert(figure != 0);
-	if (!verification(figure, activeFigureY +1, activeFigureX))
+	if (!verification(figure, activeShapeY +1, activeShapeX))
 		return (true);
 	return (false);
 }
@@ -211,29 +211,29 @@ bool Board::notDownsFigure(const Figure *figure) const{
 // in process... переделать костыли
 // 1 - звук падения, 2 - звук сброса, 3 - конец игры
 unsigned char Board::logic(){
-	if (notDownsFigure(activeFigure))// если не можем двигать, двигаем
+	if (notDownsShape(activeShape))// если не можем двигать, двигаем
 	{
 		unsigned char rezult(1);
-		figureFixed(activeFigure);//зафиксировали
+		shapeFixed(activeShape);//зафиксировали
 		if (lowerRow())//сбросилось?
 			rezult = 2;
-		objectPool.deleteObject(activeFigure);
-		activeFigure = nextFigure;//вытащили следующую фигуру
-		activeFigureY = activeFigure->getBorder().uY - 2;//стандартая корректировка от пустот
-		activeFigureX = 3;
-		nextFigure = objectPool.creatObject();// обновили новую фигуру
-		renderNextFigure = true;
-		++nextFigureId; // счетчик новой фигуры
-		if (notDownsFigure(activeFigure)){//если она не лезит в стакан, то конец
+		objectPool.deleteObject(activeShape);
+		activeShape = nextShape;//вытащили следующую фигуру
+		activeShapeY = activeShape->getBorder().uY - 2;//стандартая корректировка от пустот
+		activeShapeX = 3;
+		nextShape = objectPool.creatObject();// обновили новую фигуру
+		renderNextShape = true;
+		++nextShapeId; // счетчик новой фигуры
+		if (notDownsShape(activeShape)){//если она не лезит в стакан, то конец
 			gameOver();
-			figureInBoard(activeFigure);
+			shapeInBoard(activeShape);
 			return (3);
 		}
-		figureInBoard(activeFigure);//выкатили новую фигуру на поле
+		shapeInBoard(activeShape);//выкатили новую фигуру на поле
 		return(rezult);
 	}
 	else{
-		downFigure();
+		downShape();
 		return (0);
 	}
 }
@@ -245,15 +245,15 @@ void Board::gameOver(){
 	resetBoard();
 }
 //--------------------------------------------
-bool Board::getNextFigure(int j, int i) const{
-	assert(j >= 0 && j < Figure::sizeFigure);
-	assert(i >= 0 && i < Figure::sizeFigure);
-	return (nextFigure->getArrayFigure(j, i));
+bool Board::getNextShape(int j, int i) const{
+	assert(j >= 0 && j < Shape::sizeShape);
+	assert(i >= 0 && i < Shape::sizeShape);
+	return (nextShape->getArrayShape(j, i));
 }
 //--------------------------------------------
 // index "next figure"
-unsigned long int Board::getNextFigureId() const{
-	return (nextFigureId);
+unsigned long int Board::getNextShapeId() const{
+	return (nextShapeId);
 }
 //--------------------------------------------
 // Search full rows, reset it and shift

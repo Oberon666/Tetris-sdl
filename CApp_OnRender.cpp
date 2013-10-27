@@ -38,11 +38,11 @@ void CApp::OnRender(){
 	}
 
 	//render next figure
-	if (Board::instance().renderNextFigure){
-		Board::instance().renderNextFigure = false;
-		for (int j = 0; j < Figure::sizeFigure; ++j)
-			for (int i = 0; i < Figure::sizeFigure; ++i)
-				if (Board::instance().getNextFigure(j, i) != 0)
+	if (Board::instance().renderNextShape){
+		Board::instance().renderNextShape = false;
+		for (int j = 0; j < Shape::sizeShape; ++j)
+			for (int i = 0; i < Shape::sizeShape; ++i)
+				if (Board::instance().getNextShape(j, i) != 0)
 					CSurface::OnDraw(SurfDisplay, SurfDown,
 									 i*Settings::sizePrimitive+(Settings::boardActiveWidth+1)*Settings::sizePrimitive,
 									 j*Settings::sizePrimitive+Settings::sizePrimitive);

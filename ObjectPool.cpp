@@ -6,7 +6,7 @@
 #include <cstdlib>
 
 //----------------------------------------
-ObjectPool::PoolRecord::PoolRecord(Figure *object = 0, bool in_use = false)
+ObjectPool::PoolRecord::PoolRecord(Shape *object = 0, bool in_use = false)
 	:instance(object), in_use(in_use){}
 
 //----------------------------------------
@@ -15,7 +15,7 @@ ObjectPool::ObjectPool(){}
 ObjectPool::ObjectPool(std::size_t size){
 	try{
 		for (std::size_t i = 0; i <size; ++i){
-			PoolRecord record(new Figure);
+			PoolRecord record(new Shape);
 			//throw(std::bad_alloc() );
 			m_pool.push_back(record);
 		}
@@ -25,7 +25,7 @@ ObjectPool::ObjectPool(std::size_t size){
 	}
 }
 //----------------------------------------
-Figure* ObjectPool::creatObject(){
+Shape* ObjectPool::creatObject(){
 	for (std::size_t i = 0; i < m_pool.size(); ++i){
 		if (!m_pool[i].in_use){
 			m_pool[i].in_use = true;
@@ -36,7 +36,7 @@ Figure* ObjectPool::creatObject(){
 	//прошли весь пул и не нашли свободных объектов
 	try{
 		std::cout<<"Пулл расширен" <<std::endl;//убрать
-		PoolRecord record(new Figure, true);
+		PoolRecord record(new Shape, true);
 		//throw(std::bad_alloc() );
 		m_pool.push_back(record);
 		std::cout<<"Выделен объект! " <<record.instance <<std::endl;//убрать
@@ -47,7 +47,7 @@ Figure* ObjectPool::creatObject(){
 	}
 }
 //----------------------------------------
-void ObjectPool::deleteObject(Figure *object){
+void ObjectPool::deleteObject(Shape *object){
 	std::cout<<"отдали объект "<<object <<std::endl;//убрать
 	for (std::size_t i = 0; i < m_pool.size(); ++i)
 		if (m_pool[i].instance == object){

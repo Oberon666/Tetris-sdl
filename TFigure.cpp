@@ -7,22 +7,22 @@
 #include <iostream>
 
 //--------------------------------------------
-Figure::Figure(): color (0){
+Shape::Shape(): color (0){
 	srand (clock());
 	int type = rand()%7;
-	myType = static_cast<figure_Type>(type);
-	filling(figure_Type(type));
+	myType = static_cast<shape_Type>(type);
+	filling(shape_Type(type));
 }
 //--------------------------------------------
-Figure::Figure(figure_Type type): myType(type), color (0){
+Shape::Shape(shape_Type type): myType(type), color (0){
 	filling(type);
 }
 //--------------------------------------------
-bool Figure::cloneTurned(Figure* clone) const{
-	if (myType != figure_Q){
-		for (int j = 0; j < sizeFigure; ++j)
-			for (int i = 0; i < sizeFigure; ++i)
-				clone->arrayFigure[i][sizeFigure-1 - j] = arrayFigure[j][i];
+bool Shape::cloneTurned(Shape* clone) const{
+	if (myType != shape_Q){
+		for (int j = 0; j < sizeShape; ++j)
+			for (int i = 0; i < sizeShape; ++i)
+				clone->arrayShape[i][sizeShape-1 - j] = arrayShape[j][i];
 
 		clone->border.rX = border.uY;
 		clone->border.dY = border.rX;
@@ -46,47 +46,47 @@ bool Figure::cloneTurned(Figure* clone) const{
 	return (true);
 }
 //--------------------------------------------
-figure_Type Figure::getType() const{
+shape_Type Shape::getType() const{
 	return (myType);
 }
 //--------------------------------------------
-Figure::~Figure(){
+Shape::~Shape(){
 	//std::cout<<" i dead" <<std::endl;
 }
 //--------------------------------------------
-bool Figure::getArrayFigure(unsigned char j, unsigned char i) const{
-	return (arrayFigure[j][i]);
+bool Shape::getArrayShape(unsigned char j, unsigned char i) const{
+	return (arrayShape[j][i]);
 }
 //--------------------------------------------
-Figure::Border Figure::getBorder() const{
+Shape::Border Shape::getBorder() const{
 	return (border);
 }
 //--------------------------------------------
-unsigned char Figure::getColor() const{
+unsigned char Shape::getColor() const{
 	return (color);
 }
 //--------------------------------------------
-void Figure::filling(figure_Type type){
-	assert(type >= 0 && type <= figure_Max );
+void Shape::filling(shape_Type type){
+	assert(type >= 0 && type <= shape_Max );
 	switch (type){
-		case  figure_T: shapesT(); break;
-		case  figure_Q: shapesQ(); break;
-		case  figure_I: shapesI(); break;
-		case  figure_Z: shapesZ(); break;
-		case  figure_S: shapesS(); break;
-		case  figure_J: shapesJ(); break;
-		case  figure_L: shapesL(); break;
-		case  figure_Max: shapesMax(); break;
+		case  shape_T: shapeT(); break;
+		case  shape_Q: shapeQ(); break;
+		case  shape_I: shapeI(); break;
+		case  shape_Z: shapeZ(); break;
+		case  shape_S: shapeS(); break;
+		case  shape_J: shapeJ(); break;
+		case  shape_L: shapeL(); break;
+		case  shape_Max: shapeMax(); break;
 		default: exit(-1);
 	}
 	assert(checFilling());
 }
 //--------------------------------------------
-void Figure::clear(){
+void Shape::clear(){
 	srand (clock());
 	int type = rand()%7;
-	myType = static_cast<figure_Type>(type);
-	filling(figure_Type(type));
+	myType = static_cast<shape_Type>(type);
+	filling(shape_Type(type));
 
 //	bool arrayT[sizeFigure][sizeFigure] ={
 //		0,0,0,0,0,
@@ -105,8 +105,8 @@ void Figure::clear(){
 //	border.uY = 0;
 }
 //--------------------------------------------
-bool Figure::checFilling(){
-	if (arrayFigure[sizeFigure/2][sizeFigure/2] != 1)
+bool Shape::checFilling(){
+	if (arrayShape[sizeShape/2][sizeShape/2] != 1)
 		return (false);
 
 	if ( !(border.dY >= 0 && border.dY <= 2) )
@@ -120,32 +120,32 @@ bool Figure::checFilling(){
 
 	unsigned char u(0),r(0),d(0),l(0);
 	for (int j = 0; j < 2; ++j)
-		for(int i = 0; i < sizeFigure; ++i){
-			if (arrayFigure[j][i] == true){
+		for(int i = 0; i < sizeShape; ++i){
+			if (arrayShape[j][i] == true){
 				u = 2 - j;
 				j = 255;
 				break;
 			}
 		}
 	for (int i = 4; i > 2; --i)
-		for(int j = 0; j < sizeFigure; ++j){
-			if (arrayFigure[j][i] == true){
+		for(int j = 0; j < sizeShape; ++j){
+			if (arrayShape[j][i] == true){
 				r = i - 2;
 				i = 0;
 				break;
 			}
 		}
 	for (int j = 4; j > 2; --j)
-		for(int i = 0; i < sizeFigure; ++i){
-			if (arrayFigure[j][i] == true){
+		for(int i = 0; i < sizeShape; ++i){
+			if (arrayShape[j][i] == true){
 				d = j - 2;
 				j = 0;
 				break;
 			}
 		}
 	for (int i = 0; i < 2; ++i)
-		for(int j = 0; j < sizeFigure; ++j){
-			if (arrayFigure[j][i] == true){
+		for(int j = 0; j < sizeShape; ++j){
+			if (arrayShape[j][i] == true){
 				l = 2 - i;
 				i = 255;
 				break;
@@ -160,17 +160,17 @@ bool Figure::checFilling(){
 }
 
 //--------------------------------------------
-void Figure::shapesT(){
-	bool arrayT[sizeFigure][sizeFigure] ={
+void Shape::shapeT(){
+	bool arrayT[sizeShape][sizeShape] ={
 		0,0,0,0,0,
 		0,0,1,0,0,
 		0,1,1,1,0,
 		0,0,0,0,0,
 		0,0,0,0,0};
 
-	for (int j = 0; j < sizeFigure; ++j)
-		for (int i = 0; i < sizeFigure; ++i)
-			arrayFigure[j][i] = arrayT[j][i];
+	for (int j = 0; j < sizeShape; ++j)
+		for (int i = 0; i < sizeShape; ++i)
+			arrayShape[j][i] = arrayT[j][i];
 
 	border.dY = 0;
 	border.lX = 1;
@@ -179,17 +179,17 @@ void Figure::shapesT(){
 	return;
 }
 //--------------------------------------------
-void Figure::shapesQ(){
-	bool arrayT[sizeFigure][sizeFigure] ={
+void Shape::shapeQ(){
+	bool arrayT[sizeShape][sizeShape] ={
 		0,0,0,0,0,
 		0,0,0,0,0,
 		0,1,1,0,0,
 		0,1,1,0,0,
 		0,0,0,0,0};
 
-	for (int j = 0; j < sizeFigure; ++j)
-		for (int i = 0; i < sizeFigure; ++i)
-			arrayFigure[j][i] = arrayT[j][i];
+	for (int j = 0; j < sizeShape; ++j)
+		for (int i = 0; i < sizeShape; ++i)
+			arrayShape[j][i] = arrayT[j][i];
 
 	border.dY = 1;
 	border.lX = 1;
@@ -198,17 +198,17 @@ void Figure::shapesQ(){
 	return;
 }
 //--------------------------------------------
-void Figure::shapesI(){
-	bool arrayT[sizeFigure][sizeFigure] ={
+void Shape::shapeI(){
+	bool arrayT[sizeShape][sizeShape] ={
 		0,0,0,0,0,
 		0,0,0,0,0,
 		1,1,1,1,0,
 		0,0,0,0,0,
 		0,0,0,0,0};
 
-	for (int j = 0; j < sizeFigure; ++j)
-		for (int i = 0; i < sizeFigure; ++i)
-			arrayFigure[j][i] = arrayT[j][i];
+	for (int j = 0; j < sizeShape; ++j)
+		for (int i = 0; i < sizeShape; ++i)
+			arrayShape[j][i] = arrayT[j][i];
 
 	border.dY = 0;
 	border.lX = 2;
@@ -217,17 +217,17 @@ void Figure::shapesI(){
 	return;
 }
 //--------------------------------------------
-void Figure::shapesZ(){
-	bool arrayT[sizeFigure][sizeFigure] ={
+void Shape::shapeZ(){
+	bool arrayT[sizeShape][sizeShape] ={
 		0,0,0,0,0,
 		0,1,1,0,0,
 		0,0,1,1,0,
 		0,0,0,0,0,
 		0,0,0,0,0};
 
-	for (int j = 0; j < sizeFigure; ++j)
-		for (int i = 0; i < sizeFigure; ++i)
-			arrayFigure[j][i] = arrayT[j][i];
+	for (int j = 0; j < sizeShape; ++j)
+		for (int i = 0; i < sizeShape; ++i)
+			arrayShape[j][i] = arrayT[j][i];
 
 	border.dY = 0;
 	border.lX = 1;
@@ -236,17 +236,17 @@ void Figure::shapesZ(){
 	return;
 }
 //--------------------------------------------
-void Figure::shapesS(){
-	bool arrayT[sizeFigure][sizeFigure] ={
+void Shape::shapeS(){
+	bool arrayT[sizeShape][sizeShape] ={
 		0,0,0,0,0,
 		0,0,1,1,0,
 		0,1,1,0,0,
 		0,0,0,0,0,
 		0,0,0,0,0};
 
-	for (int j = 0; j < sizeFigure; ++j)
-		for (int i = 0; i < sizeFigure; ++i)
-			arrayFigure[j][i] = arrayT[j][i];
+	for (int j = 0; j < sizeShape; ++j)
+		for (int i = 0; i < sizeShape; ++i)
+			arrayShape[j][i] = arrayT[j][i];
 
 	border.dY = 0;
 	border.lX = 1;
@@ -255,17 +255,17 @@ void Figure::shapesS(){
 	return;
 }
 //--------------------------------------------
-void Figure::shapesJ(){
-	bool arrayT[sizeFigure][sizeFigure] ={
+void Shape::shapeJ(){
+	bool arrayT[sizeShape][sizeShape] ={
 		0,0,0,0,0,
 		0,1,0,0,0,
 		0,1,1,1,0,
 		0,0,0,0,0,
 		0,0,0,0,0};
 
-	for (int j = 0; j < sizeFigure; ++j)
-		for (int i = 0; i < sizeFigure; ++i)
-			arrayFigure[j][i] = arrayT[j][i];
+	for (int j = 0; j < sizeShape; ++j)
+		for (int i = 0; i < sizeShape; ++i)
+			arrayShape[j][i] = arrayT[j][i];
 
 	border.dY = 0;
 	border.lX = 1;
@@ -274,17 +274,17 @@ void Figure::shapesJ(){
 	return;
 }
 //--------------------------------------------
-void Figure::shapesL(){
-	bool arrayT[sizeFigure][sizeFigure] ={
+void Shape::shapeL(){
+	bool arrayT[sizeShape][sizeShape] ={
 		0,0,0,0,0,
 		0,0,0,1,0,
 		0,1,1,1,0,
 		0,0,0,0,0,
 		0,0,0,0,0};
 
-	for (int j = 0; j < sizeFigure; ++j)
-		for (int i = 0; i < sizeFigure; ++i)
-			arrayFigure[j][i] = arrayT[j][i];
+	for (int j = 0; j < sizeShape; ++j)
+		for (int i = 0; i < sizeShape; ++i)
+			arrayShape[j][i] = arrayT[j][i];
 
 	border.dY = 0;
 	border.lX = 1;
@@ -293,17 +293,17 @@ void Figure::shapesL(){
 	return;
 }
 //--------------------------------------------
-void Figure::shapesMax(){
-	bool arrayT[sizeFigure][sizeFigure] ={
+void Shape::shapeMax(){
+	bool arrayT[sizeShape][sizeShape] ={
 		1,1,1,1,1,
 		1,1,1,1,1,
 		1,1,1,1,1,
 		1,1,1,1,1,
 		1,1,1,1,1};
 
-	for (int j = 0; j < sizeFigure; ++j)
-		for (int i = 0; i < sizeFigure; ++i)
-			arrayFigure[j][i] = arrayT[j][i];
+	for (int j = 0; j < sizeShape; ++j)
+		for (int i = 0; i < sizeShape; ++i)
+			arrayShape[j][i] = arrayT[j][i];
 
 	border.dY = 2;
 	border.lX = 2;

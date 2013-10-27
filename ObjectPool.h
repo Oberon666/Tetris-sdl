@@ -10,9 +10,9 @@
 class ObjectPool{
 private:
 	struct PoolRecord{
-		Figure* instance;
+		Shape* instance;
 		bool in_use;
-		PoolRecord(Figure* object, bool in_use);
+		PoolRecord(Shape* object, bool in_use);
 	};
 	std::vector<PoolRecord> m_pool;
 
@@ -22,8 +22,8 @@ private:
 public:
 	ObjectPool();
 	explicit ObjectPool(std::size_t);
-	Figure* creatObject();
-	void deleteObject(Figure* object);
+	Shape* creatObject();
+	void deleteObject(Shape* object);
 	~ObjectPool();
 };
 //----------------------------------------
