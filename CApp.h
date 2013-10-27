@@ -21,6 +21,7 @@ public:
 private:
 	bool Running;
 	Timer fps, logic, speedLevelT;
+	Board& boardI;
 
 	//for long press
 	struct MovingFigure{

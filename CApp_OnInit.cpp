@@ -2,10 +2,8 @@
 #include "myHeader.h"
 #include "CApp.h"
 
-
 //--------------------------------------------
 bool CApp::OnInit(){
-	// inin SDL
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0){
 		Vet::myError( "error to SDL_Init", SDL_GetError());
 		return (false);
@@ -59,8 +57,6 @@ bool CApp::OnInit(){
 		return (false);
 
 	SDL_WM_SetCaption( "Tetris", NULL );
-
-	Board::instance();
 
 	return true;
 }

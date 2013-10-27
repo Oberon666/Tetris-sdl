@@ -8,7 +8,7 @@
 //--------------------------------------------
 CApp::CApp(): Running(true), SurfDisplay(0), SurfNone(0), SurfDown(0),
 	SurfFixed(0), SurfWhite(0), delayLogic(1000), FramesPerSecond(50),
-	frame(0), speedLevel(1), font(0), textRender(true),
+	frame(0), speedLevel(1), font(0), textRender(true), boardI(Board::instance()),
 	pauseGame(true), buffer(0), mixRow(0), mixDown(0), mixMusix(0), message(0)
 {
 	textColor.r = 0;
@@ -60,7 +60,7 @@ int CApp::OnExecute() {
 
 				if (logic.getTick() > delayLogic) {
 					logic.start();
-					rezultLogic = Board::instance().logic();
+					rezultLogic = boardI.logic();
 					parsingLogic(rezultLogic);
 					rezultLogic = 0;
 				}
@@ -89,7 +89,7 @@ void CApp::parsingLogic(int key) {
 			break;
 		case 2:
 			Mix_PlayChannel( -1, mixRow, 0 );
-			std::cout<<Board::instance().getPoints() <<std::endl;
+			std::cout<<boardI.getPoints() <<std::endl;
 			break;
 		case 3:
 			pauseGame = true;
